@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\Android\MaterialUI\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="D:\Android\MaterialUI\app\build\intermediates\pre-dexed\debug\classes-8d9ac64a0843edb1f0a7082653ebb9307ed3f661.jar" />
+    </item>
+    <item
+        jar="D:\Android\MaterialUI\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="D:\Android\MaterialUI\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-e0a44c6c4cf3a0165cc412ca85c61d1cd5db2e3a.jar" />
+    </item>
+    <item
+        jar="D:\Android\MaterialUI\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="D:\Android\MaterialUI\app\build\intermediates\pre-dexed\debug\classes-320495a0ef1a088d755c25c5e5d6da7f0fd21d1b.jar" />
+    </item>
+    <item
+        jar="C:\Users\sumit\.gradle\caches\modules-2\files-2.1\com.mcxiaoke.volley\library\1.0.15\9093a362d18c5f81f58e49d86dece57d9b6e1cb7\library-1.0.15.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9093a362d18c5f81f58e49d86dece57d9b6e1cb7">
+        <dex dex="D:\Android\MaterialUI\app\build\intermediates\pre-dexed\debug\library-1.0.15-88978d13ba6006ab9d1be9169f7225b648fe9a3f.jar" />
+    </item>
+    <item
+        jar="D:\Android\MaterialUI\app\build\intermediates\exploded-aar\it.neokree\MaterialTabs\0.11\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fef6aa7ea0bb2d6adf10965d0a5bb8e353517bff">
+        <dex dex="D:\Android\MaterialUI\app\build\intermediates\pre-dexed\debug\classes-4695233ccb8e43b7477450328c776a77ccc6420b.jar" />
+    </item>
+    <item
+        jar="D:\Android\MaterialUI\app\build\intermediates\exploded-aar\com.github.markushi\android-ui\1.2\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="96436aef5f48b09aca1e0183dfcd7782aa580bd6">
+        <dex dex="D:\Android\MaterialUI\app\build\intermediates\pre-dexed\debug\classes-b6f86715c6710a4795e024215fedc53859c6d634.jar" />
+    </item>
+    <item
+        jar="D:\Android\MaterialUI\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="D:\Android\MaterialUI\app\build\intermediates\pre-dexed\debug\classes-73d46326a70393ba229081bc32db790cee8c4930.jar" />
+    </item>
+    <item
+        jar="D:\Android\Android SDK\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="D:\Android\MaterialUI\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-ec78b74da9ba98b2477d860f97cc699abd22230c.jar" />
+    </item>
+
+</items>
