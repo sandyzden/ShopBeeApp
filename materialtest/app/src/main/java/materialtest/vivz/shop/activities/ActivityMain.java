@@ -96,13 +96,12 @@ public class ActivityMain extends ActionBarActivity implements MaterialTabListen
         //setup the NavigationDrawer
         mDrawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        mDrawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+        int activityID = 1;
+        mDrawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar, activityID);
     }
 
 
-    public void onDrawerItemClicked(int index) {
-        mPager.setCurrentItem(index);
-    }
+    public void onDrawerItemClicked(int index) { mPager.setCurrentItem(index); }
 
     public View getContainerToolbar() {
         return mContainerToolbar;

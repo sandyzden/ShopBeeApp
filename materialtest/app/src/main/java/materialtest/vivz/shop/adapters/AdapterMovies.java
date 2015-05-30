@@ -83,12 +83,12 @@ public class AdapterMovies extends RecyclerView.Adapter<AdapterMovies.ViewHolder
         }
 
         if (position > mPreviousPosition) {
-            AnimationUtils.animateSunblind(holder, true);
+//            AnimationUtils.animateSunblind(holder, true);
 //            AnimationUtils.animateSunblind(holder, true);
 //            AnimationUtils.animate1(holder, true);
 //            AnimationUtils.animate(holder,true);
         } else {
-            AnimationUtils.animateSunblind(holder, false);
+//            AnimationUtils.animateSunblind(holder, false);
 //            AnimationUtils.animateSunblind(holder, false);
 //            AnimationUtils.animate1(holder, false);
 //            AnimationUtils.animate(holder, false);

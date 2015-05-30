@@ -72,6 +72,20 @@
             android:name="materialtest.vivz.shop.materialtest.FloatingMenusActivity"
             android:label="@string/title_activity_floating_menus" >
         </activity>
+        <activity
+            android:name="materialtest.vivz.shop.activities.InventoryActivity"
+            android:label="@string/title_activity_inventory" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="materialtest.vivz.shop.activities.ActivityMain" />
+        </activity>
+        <activity
+            android:name=".ProductsActivity"
+            android:label="@string/title_activity_products" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="materialtest.vivz.shop.activities.ActivityMain" />
+        </activity>
     </application>
 
 </manifest>

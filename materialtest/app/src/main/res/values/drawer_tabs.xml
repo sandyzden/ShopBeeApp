@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="drawer_tabs">
-        <item>Search</item>
-        <item>Hits</item>
-        <item>Upcoming</item>
+        <item>Store</item>
+        <item>Inventory</item>
+        <item>Products</item>
+        <item>Category</item>
+        <item>Reports</item>
+        <item>Settings</item>
     </string-array>
 </resources>

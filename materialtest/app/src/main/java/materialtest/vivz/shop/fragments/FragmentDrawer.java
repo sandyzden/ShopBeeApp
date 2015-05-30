@@ -2,6 +2,7 @@ package materialtest.vivz.shop.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -16,13 +17,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import materialtest.vivz.shop.activities.ActivityMain;
+import materialtest.vivz.shop.activities.InventoryActivity;
 import materialtest.vivz.shop.adapters.AdapterDrawer;
 import materialtest.vivz.shop.materialtest.MyApplication;
+import materialtest.vivz.slidenerd.materialtest.ProductsActivity;
 import materialtest.vivz.slidenerd.materialtest.R;
 import materialtest.vivz.shop.pojo.Information;
 
@@ -70,7 +74,7 @@ public class FragmentDrawer extends Fragment {
     public List<Information> getData() {
         //load only static data inside a drawer
         List<Information> data = new ArrayList<>();
-        int[] icons = {R.drawable.ic_action_search_orange, R.drawable.ic_action_trending_orange, R.drawable.ic_action_upcoming_orange};
+        int[] icons = {R.drawable.ic_action_search_orange, R.drawable.ic_action_trending_orange, R.drawable.ic_action_upcoming_orange,R.drawable.ic_action_search_orange, R.drawable.ic_action_trending_orange, R.drawable.ic_action_upcoming_orange};
         String[] titles = getResources().getStringArray(R.array.drawer_tabs);
         for (int i = 0; i < titles.length; i++) {
             Information information = new Information();
@@ -105,7 +109,24 @@ public class FragmentDrawer extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
-                ((ActivityMain) getActivity()).onDrawerItemClicked(position - 1);
+                //((ActivityMain) getActivity()).onDrawerItemClicked(position - 1);
+                Intent intent;
+                switch (position) {
+                    case 1:
+                        intent = new Intent(getActivity().getApplicationContext(), ActivityMain.class);
+                        break;
+                    case 2:
+                        intent = new Intent(getActivity().getApplicationContext(), InventoryActivity.class);
+                        break;
+                    case 3:
+                        intent = new Intent(getActivity().getApplicationContext(), ProductsActivity.class);
+                        break;
+                    default:
+                        intent = new Intent(getActivity().getApplicationContext(), InventoryActivity.class);
+                }
+
+                startActivity(intent);
+                //Toast.makeText(getActivity().getApplicationContext(), "The clicked item index is: " + position, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -116,7 +137,7 @@ public class FragmentDrawer extends Fragment {
 
     }
 
-    public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
+    public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar, final int activityID) {
         mContainer = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
@@ -141,7 +162,9 @@ public class FragmentDrawer extends Fragment {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
-                ((ActivityMain) getActivity()).onDrawerSlide(slideOffset);
+                if( activityID == 1) {
+                    ((ActivityMain) getActivity()).onDrawerSlide(slideOffset);
+                }
                 toolbar.setAlpha(1 - slideOffset / 2);
             }
         };
