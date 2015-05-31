@@ -4,7 +4,7 @@
         <item>Store</item>
         <item>Inventory</item>
         <item>Products</item>
-        <item>Category</item>
+        <item>Transactions</item>
         <item>Reports</item>
         <item>Settings</item>
     </string-array>

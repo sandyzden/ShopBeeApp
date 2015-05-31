@@ -1,4 +1,4 @@
-package materialtest.vivz.slidenerd.materialtest;
+package materialtest.vivz.shop.activities;
 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import materialtest.vivz.shop.fragments.FragmentDrawer;
+import materialtest.vivz.slidenerd.materialtest.R;
 
 
 public class ProductsActivity extends ActionBarActivity {

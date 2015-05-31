@@ -80,8 +80,15 @@
                 android:value="materialtest.vivz.shop.activities.ActivityMain" />
         </activity>
         <activity
-            android:name=".ProductsActivity"
+            android:name="materialtest.vivz.shop.activities.ProductsActivity"
             android:label="@string/title_activity_products" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="materialtest.vivz.shop.activities.ActivityMain" />
+        </activity>
+        <activity
+            android:name="materialtest.vivz.shop.activities.TransactionsActivity"
+            android:label="@string/title_activity_transactions" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="materialtest.vivz.shop.activities.ActivityMain" />

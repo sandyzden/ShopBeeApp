@@ -55,6 +55,7 @@
     <string name="lorem_ipsum_large">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed ultricies risus. Integer nisi orci, lacinia sit amet mi in, mollis scelerisque purus. Nunc risus ligula, maximus eu orci a, facilisis dictum velit. Proin nec laoreet magna. Nulla ut sagittis lorem. Morbi id enim fermentum, semper diam et, tempus leo. Aliquam vel congue orci. Suspendisse potenti. Curabitur finibus diam augue, vel bibendum sapien ultrices non.</string>
     <string name="title_activity_inventory">InventoryActivity</string>
     <string name="title_activity_products">ProductsActivity</string>
+    <string name="title_activity_transactions">Transactions</string>
 
 
 </resources>

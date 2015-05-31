@@ -17,16 +17,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import materialtest.vivz.shop.activities.ActivityMain;
 import materialtest.vivz.shop.activities.InventoryActivity;
+import materialtest.vivz.shop.activities.TransactionsActivity;
 import materialtest.vivz.shop.adapters.AdapterDrawer;
 import materialtest.vivz.shop.materialtest.MyApplication;
-import materialtest.vivz.slidenerd.materialtest.ProductsActivity;
+import materialtest.vivz.shop.activities.ProductsActivity;
 import materialtest.vivz.slidenerd.materialtest.R;
 import materialtest.vivz.shop.pojo.Information;
 
@@ -120,6 +120,9 @@ public class FragmentDrawer extends Fragment {
                         break;
                     case 3:
                         intent = new Intent(getActivity().getApplicationContext(), ProductsActivity.class);
+                        break;
+                    case 4:
+                        intent = new Intent(getActivity().getApplicationContext(), TransactionsActivity.class);
                         break;
                     default:
                         intent = new Intent(getActivity().getApplicationContext(), InventoryActivity.class);
