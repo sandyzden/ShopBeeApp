@@ -25,7 +25,7 @@ public class TransactionsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
         setupDrawer();
-        Toast.makeText(this, "Welcome to the products", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Welcome to the transactions", Toast.LENGTH_SHORT).show();
     }
 
     private void setupDrawer() {
