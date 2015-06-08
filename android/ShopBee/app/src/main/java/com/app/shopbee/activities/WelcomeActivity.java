@@ -1,9 +1,6 @@
-package com.app.shopbee.login;
+package com.app.shopbee.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import java.io.InputStream;
 
@@ -13,7 +10,6 @@ import android.content.IntentSender.SendIntentException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,11 +53,11 @@ public class WelcomeActivity extends Activity implements OnClickListener, Connec
         signinButton = (SignInButton) findViewById(R.id.signin);
         signinButton.setOnClickListener(this);
 
-        image = (ImageView) findViewById(R.id.image);
-        username = (TextView) findViewById(R.id.username);
-        emailLabel = (TextView) findViewById(R.id.email);
+        //image = (ImageView) findViewById(R.id.image);
+        //username = (TextView) findViewById(R.id.username);
+       // emailLabel = (TextView) findViewById(R.id.email);
 
-        profileFrame = (LinearLayout) findViewById(R.id.profileFrame);
+        //profileFrame = (LinearLayout) findViewById(R.id.profileFrame);
         signinFrame = (LinearLayout) findViewById(R.id.signinFrame);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(Plus.API, Plus.PlusOptions.builder().build()).addScope(Plus.SCOPE_PLUS_LOGIN).build();
