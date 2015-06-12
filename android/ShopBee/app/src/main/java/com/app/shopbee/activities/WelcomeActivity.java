@@ -10,6 +10,7 @@ import android.content.IntentSender.SendIntentException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,11 +29,18 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.content.Intent;
+import android.content.Context;
+
 import com.app.shopbee.R;
 
 public class WelcomeActivity extends Activity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 0;
+
+    private static final String LOGIN_PREFS="LOGIN_PREFERENCE";
 
     // Google client to communicate with Google
     private GoogleApiClient mGoogleApiClient;
@@ -53,11 +61,11 @@ public class WelcomeActivity extends Activity implements OnClickListener, Connec
         signinButton = (SignInButton) findViewById(R.id.signin);
         signinButton.setOnClickListener(this);
 
-        //image = (ImageView) findViewById(R.id.image);
-        //username = (TextView) findViewById(R.id.username);
-       // emailLabel = (TextView) findViewById(R.id.email);
+        image = (ImageView) findViewById(R.id.image);
+        username = (TextView) findViewById(R.id.username);
+       emailLabel = (TextView) findViewById(R.id.email);
 
-        //profileFrame = (LinearLayout) findViewById(R.id.profileFrame);
+        profileFrame = (LinearLayout) findViewById(R.id.profileFrame);
         signinFrame = (LinearLayout) findViewById(R.id.signinFrame);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(Plus.API, Plus.PlusOptions.builder().build()).addScope(Plus.SCOPE_PLUS_LOGIN).build();
@@ -146,14 +154,21 @@ public class WelcomeActivity extends Activity implements OnClickListener, Connec
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
+                saveToPreferences(getApplicationContext(),"userName",personName);
+                saveToPreferences(getApplicationContext(),"emailId",email);
+                saveToPreferences(getApplicationContext(),"profilePicUrl",personPhotoUrl);
+
+
                 username.setText(personName);
                 emailLabel.setText(email);
 
-                new LoadProfileImage(image).execute(personPhotoUrl);
+                NavUtils.navigateUpTo(this,NavUtils.getParentActivityIntent(this));
+
+               // new LoadProfileImage(image).execute(personPhotoUrl);
 
                 // update profile frame with new info about Google Account
                 // profile
-                updateProfile(true);
+                //updateProfile(true);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -225,6 +240,12 @@ public class WelcomeActivity extends Activity implements OnClickListener, Connec
         }
     }
 
+    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(preferenceName, preferenceValue);
+        editor.apply();
+    }
 
 
 }

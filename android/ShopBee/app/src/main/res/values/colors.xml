@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <color name="colorPrimary">#065E52</color>
+    <color name="colorPrimaryDark">#065E52</color>
+    <color name="colorPrimaryLight">#6EADA5</color>
+    <color name="colorAccent">#FF9800</color>
+    <color name="colorHighlight">#B6B6B6</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#727272</color>
+    <color name="colorDivider">#B6B6B6</color>
+    <color name="app_primary">#455A64</color>
+    <color name="app_primary_dark">#37474F</color>
+</resources>
