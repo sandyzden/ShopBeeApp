@@ -1,253 +1,68 @@
+/*
+ * Copyright 2014 Google Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.app.shopbee.activities;
 
-import android.os.Bundle;
-
-import java.io.InputStream;
-
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.support.v4.app.NavUtils;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
-
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.content.Intent;
-import android.content.Context;
 
 import com.app.shopbee.R;
 
-public class WelcomeActivity extends Activity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
+import com.app.shopbee.Config;
 
-    private static final int RC_SIGN_IN = 0;
+import com.app.shopbee.util.PrefUtils;
 
-    private static final String LOGIN_PREFS="LOGIN_PREFERENCE";
-
-    // Google client to communicate with Google
-    private GoogleApiClient mGoogleApiClient;
-
-    private boolean mIntentInProgress;
-    private boolean signedInUser;
-    private ConnectionResult mConnectionResult;
-    private SignInButton signinButton;
-    private ImageView image;
-    private TextView username, emailLabel;
-    private LinearLayout profileFrame, signinFrame;
-
+public class WelcomeActivity extends Activity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_welcome);
 
-        signinButton = (SignInButton) findViewById(R.id.signin);
-        signinButton.setOnClickListener(this);
-
-        image = (ImageView) findViewById(R.id.image);
-        username = (TextView) findViewById(R.id.username);
-       emailLabel = (TextView) findViewById(R.id.email);
-
-        profileFrame = (LinearLayout) findViewById(R.id.profileFrame);
-        signinFrame = (LinearLayout) findViewById(R.id.signinFrame);
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(Plus.API, Plus.PlusOptions.builder().build()).addScope(Plus.SCOPE_PLUS_LOGIN).build();
-    }
-
-    protected void onStart() {
-        super.onStart();
-        mGoogleApiClient.connect();
-    }
-
-    protected void onStop() {
-        super.onStop();
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
-    }
-
-    private void resolveSignInError() {
-        if (mConnectionResult.hasResolution()) {
-            try {
-                mIntentInProgress = true;
-                mConnectionResult.startResolutionForResult(this, RC_SIGN_IN);
-            } catch (SendIntentException e) {
-                mIntentInProgress = false;
-                mGoogleApiClient.connect();
+        findViewById(R.id.button_accept).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrefUtils.markTosAccepted(WelcomeActivity.this);
+                Intent intent = new Intent(WelcomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
             }
-        }
-    }
+        });
 
-    @Override
-    public void onConnectionFailed(ConnectionResult result) {
-        if (!result.hasResolution()) {
-            GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this, 0).show();
-            return;
-        }
-
-        if (!mIntentInProgress) {
-            // store mConnectionResult
-            mConnectionResult = result;
-
-            if (signedInUser) {
-                resolveSignInError();
+        findViewById(R.id.button_decline).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
-        }
+        });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
-        switch (requestCode) {
-            case RC_SIGN_IN:
-                if (responseCode == RESULT_OK) {
-                    signedInUser = false;
+    public void onResume() {
+        super.onResume();
 
-                }
-                mIntentInProgress = false;
-                if (!mGoogleApiClient.isConnecting()) {
-                    mGoogleApiClient.connect();
-                }
-                break;
+        // Shows the debug warning, if this is a debug build and the warning has not been shown yet
+        if (Config.IS_DOGFOOD_BUILD && !PrefUtils.wasDebugWarningShown(this)) {
+            new AlertDialog.Builder(this)
+                    .setTitle(Config.DOGFOOD_BUILD_WARNING_TITLE)
+                    .setMessage(Config.DOGFOOD_BUILD_WARNING_TEXT)
+                    .setPositiveButton(android.R.string.ok, null).show();
+            PrefUtils.markDebugWarningShown(this);
         }
     }
-
-    @Override
-    public void onConnected(Bundle arg0) {
-        signedInUser = false;
-        Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
-        getProfileInformation();
-    }
-
-    private void updateProfile(boolean isSignedIn) {
-        if (isSignedIn) {
-            signinFrame.setVisibility(View.GONE);
-            profileFrame.setVisibility(View.VISIBLE);
-
-        } else {
-            signinFrame.setVisibility(View.VISIBLE);
-            profileFrame.setVisibility(View.GONE);
-        }
-    }
-
-    private void getProfileInformation() {
-        try {
-            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-                Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-                String personName = currentPerson.getDisplayName();
-                String personPhotoUrl = currentPerson.getImage().getUrl();
-                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-
-                saveToPreferences(getApplicationContext(),"userName",personName);
-                saveToPreferences(getApplicationContext(),"emailId",email);
-                saveToPreferences(getApplicationContext(),"profilePicUrl",personPhotoUrl);
-
-
-                username.setText(personName);
-                emailLabel.setText(email);
-
-                NavUtils.navigateUpTo(this,NavUtils.getParentActivityIntent(this));
-
-               // new LoadProfileImage(image).execute(personPhotoUrl);
-
-                // update profile frame with new info about Google Account
-                // profile
-                //updateProfile(true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int cause) {
-        mGoogleApiClient.connect();
-        updateProfile(false);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.signin:
-                googlePlusLogin();
-                break;
-        }
-    }
-
-    public void signIn(View v) {
-        googlePlusLogin();
-    }
-
-    public void logout(View v) {
-        googlePlusLogout();
-    }
-
-    private void googlePlusLogin() {
-        if (!mGoogleApiClient.isConnecting()) {
-            signedInUser = true;
-            resolveSignInError();
-        }
-    }
-
-    private void googlePlusLogout() {
-        if (mGoogleApiClient.isConnected()) {
-            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-            mGoogleApiClient.disconnect();
-            mGoogleApiClient.connect();
-            updateProfile(false);
-        }
-    }
-
-    // download Google Account profile image, to complete profile
-    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView downloadedImage;
-
-        public LoadProfileImage(ImageView image) {
-            this.downloadedImage = image;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String url = urls[0];
-            Bitmap icon = null;
-            try {
-                InputStream in = new java.net.URL(url).openStream();
-                icon = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return icon;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            downloadedImage.setImageBitmap(result);
-        }
-    }
-
-    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(preferenceName, preferenceValue);
-        editor.apply();
-    }
-
-
 }
-
-
