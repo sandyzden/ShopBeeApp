@@ -21,6 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:minHeight="?attr/actionBarSize"
     tools:context=".activities.ProfileActivity">
 
     <!-- Main layout -->
@@ -36,12 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- Sessions fragment showing the session grid
-            <fragment android:name="com.google.samples.apps.iosched.ui.SessionsFragment"
-                android:id="@+id/sessions_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout="@layout/fragment_sessions" />-->
+            <!-- Sessions fragment showing the session grid-->
+
         </com.app.shopbee.ui.MultiSwipeRefreshLayout>
 
         <LinearLayout style="@style/HeaderBar"
@@ -52,6 +49,7 @@
             android:orientation="vertical">
 
             <include layout="@layout/toolbar_actionbar" /> <!-- placeholder, empty except on L -->
+
 
             <!-- Spinners for additional filters
             <LinearLayout
@@ -77,16 +75,38 @@
             </LinearLayout>-->
         </LinearLayout>
 
+
+
         <!-- Butter bar -->
         <FrameLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_marginTop="?actionBarSize">
+
             <include layout="@layout/include_butter_bar" />
+
+            <!--<fragment android:name="com.app.shopbee.fragments.StoreMainFragment"
+                android:id="@+id/sessions_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                tools:layout="@layout/store_main_fragment" />-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cardList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
         </FrameLayout>
     </com.app.shopbee.ui.DrawShadowFrameLayout>
 
     <!-- Nav drawer-->
     <include layout="@layout/navdrawer" />
 
+
+
 </android.support.v4.widget.DrawerLayout>
+
