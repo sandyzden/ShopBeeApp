@@ -24,6 +24,7 @@
     android:minHeight="?attr/actionBarSize"
     tools:context=".activities.ProfileActivity">
 
+
     <!-- Main layout -->
     <com.app.shopbee.ui.DrawShadowFrameLayout
         android:id="@+id/main_content"
@@ -31,82 +32,43 @@
         android:layout_height="match_parent"
         android:clipChildren="false">
 
-
         <com.app.shopbee.ui.MultiSwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- Sessions fragment showing the session grid-->
+
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.github.florent37.materialviewpager.MaterialViewPager
+            android:id="@+id/materialViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:viewpager_logo="@layout/header_logo"
+            app:viewpager_pagerTitleStrip="@layout/material_view_pager_pagertitlestrip_newstand"
+            app:viewpager_logoMarginTop="100dp"
+            app:viewpager_color="@color/colorPrimary"
+            app:viewpager_headerHeight="200dp"
+            app:viewpager_headerAlpha="0.6"
+            app:viewpager_hideLogoWithFade="false"
+            app:viewpager_hideToolbarAndTitle="true"
+            app:viewpager_enableToolbarElevation="true"
+            app:viewpager_parallaxHeaderFactor="1.5"
+            app:viewpager_headerAdditionalHeight="20dp"
+            app:viewpager_displayToolbarWhenSwipe="true"
+            app:viewpager_transparentToolbar="true"
+            app:viewpager_animatedHeaderImage="true"
+
+            />
+    </RelativeLayout>
 
         </com.app.shopbee.ui.MultiSwipeRefreshLayout>
 
-        <LinearLayout style="@style/HeaderBar"
-            android:id="@+id/headerbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:orientation="vertical">
-
-            <include layout="@layout/toolbar_actionbar" /> <!-- placeholder, empty except on L -->
-
-
-            <!-- Spinners for additional filters
-            <LinearLayout
-                android:id="@+id/filters_box"
-                android:visibility="gone"
-                android:paddingLeft="?spinnerBarInsetStart"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/filterbar_height"
-                android:orientation="horizontal">
-
-                <Spinner style="@style/Widget.IOSched.HeaderBar.Spinner"
-                    android:id="@+id/secondary_filter_spinner_1"
-                    android:layout_width="@dimen/filter_spinner_width"
-                    android:layout_weight="@integer/filter_spinner_weight"
-                    android:layout_height="match_parent" />
-
-                <Spinner style="@style/Widget.IOSched.HeaderBar.Spinner"
-                    android:id="@+id/secondary_filter_spinner_2"
-                    android:layout_width="@dimen/filter_spinner_width"
-                    android:layout_weight="@integer/filter_spinner_weight"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>-->
-        </LinearLayout>
-
-
-
-        <!-- Butter bar -->
-        <FrameLayout android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginTop="?actionBarSize">
-
-            <include layout="@layout/include_butter_bar" />
-
-            <!--<fragment android:name="com.app.shopbee.fragments.StoreMainFragment"
-                android:id="@+id/sessions_fragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                tools:layout="@layout/store_main_fragment" />-->
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/cardList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
-        </FrameLayout>
     </com.app.shopbee.ui.DrawShadowFrameLayout>
 
-    <!-- Nav drawer-->
     <include layout="@layout/navdrawer" />
 
-
-
 </android.support.v4.widget.DrawerLayout>
-

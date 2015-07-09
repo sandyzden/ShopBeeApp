@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -374,7 +375,7 @@ abstract class BaseActivity extends ActionBarActivity implements
 
         protected void requestDataRefresh() {
                 Account activeAccount = AccountUtils.getActiveAccount(this);
-                ContentResolver contentResolver = getContentResolver();
+                //ContentResolver contentResolver = getContentResolver();
                 //if (contentResolver.isSyncActive(activeAccount,"com.app.shopbee")) {
                         LOGD(TAG, "Ignoring manual sync request because a sync is already in progress.");
                   //      return;
@@ -394,6 +395,8 @@ abstract class BaseActivity extends ActionBarActivity implements
                 }
                 mDrawerLayout.setStatusBarBackgroundColor(
                         getResources().getColor(R.color.theme_primary_dark));
+
+
                 ScrimInsetsScrollView navDrawer = (ScrimInsetsScrollView)
                         mDrawerLayout.findViewById(R.id.navdrawer);
                 if (selfItem == NAVDRAWER_ITEM_INVALID) {
@@ -427,10 +430,11 @@ abstract class BaseActivity extends ActionBarActivity implements
 
                 if (mActionBarToolbar != null) {
                         mActionBarToolbar.setNavigationIcon(R.drawable.ic_drawer);
+
                         mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                        mDrawerLayout.openDrawer(Gravity.START);
+                                        mDrawerLayout.openDrawer(GravityCompat.START);
                                 }
                         });
                 }
@@ -466,7 +470,7 @@ abstract class BaseActivity extends ActionBarActivity implements
                         }
                 });
 
-                mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
+                mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
                 // populate the nav drawer with the correct items
                 populateNavDrawer();
@@ -476,7 +480,7 @@ abstract class BaseActivity extends ActionBarActivity implements
                 if (!PrefUtils.isWelcomeDone(this)) {
                         // first run of the app starts with the nav drawer open
                         PrefUtils.markWelcomeDone(this);
-                        mDrawerLayout.openDrawer(Gravity.START);
+                        mDrawerLayout.openDrawer(GravityCompat.START);
 
                 }
         }
@@ -620,7 +624,7 @@ abstract class BaseActivity extends ActionBarActivity implements
         }
 
         protected boolean isNavDrawerOpen() {
-                return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(Gravity.START);
+                return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START);
         }
 
         protected void onNavDrawerSlide(float offset) {}
@@ -744,7 +748,7 @@ abstract class BaseActivity extends ActionBarActivity implements
 
         private void onNavDrawerItemClicked(final int itemId) {
                 if (itemId == getSelfNavDrawerItem()) {
-                        mDrawerLayout.closeDrawer(Gravity.START);
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
                         return;
                 }
 
@@ -768,7 +772,7 @@ abstract class BaseActivity extends ActionBarActivity implements
                         }
                 }
 
-                mDrawerLayout.closeDrawer(Gravity.START);
+                mDrawerLayout.closeDrawer(GravityCompat.START);
         }
 
         private boolean isSpecialItem(int itemId) {
@@ -821,7 +825,7 @@ abstract class BaseActivity extends ActionBarActivity implements
                 } else {
                         //Try to log the user in with the first account on the device.
                         startLoginProcess();
-                        mDrawerLayout.closeDrawer(Gravity.START);
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
                 }
         }
 
@@ -1027,7 +1031,7 @@ abstract class BaseActivity extends ActionBarActivity implements
                                                 // if there's no network, don't try to change the selected account
                                                 Toast.makeText(BaseActivity.this, R.string.no_connection_cant_login,
                                                         Toast.LENGTH_SHORT).show();
-                                                mDrawerLayout.closeDrawer(Gravity.START);
+                                                mDrawerLayout.closeDrawer(GravityCompat.START);
                                                 return;
                                         } else {
                                                 LOGD(TAG, "User requested switch to account: " + accountName);
@@ -1036,7 +1040,7 @@ abstract class BaseActivity extends ActionBarActivity implements
                                                 startLoginProcess();
                                                 mAccountBoxExpanded = false;
                                                 setupAccountBoxToggle();
-                                                mDrawerLayout.closeDrawer(Gravity.START);
+                                                mDrawerLayout.closeDrawer(GravityCompat.START);
                                                 setupAccountBox();
                                         }
                                 }
@@ -1060,6 +1064,11 @@ abstract class BaseActivity extends ActionBarActivity implements
                 return mActionBarToolbar;
         }
 
+      @Override
+        public void setContentView(int layoutResID) {
+                super.setContentView(layoutResID);
+                getActionBarToolbar();
+        }
 
 } //end class
 

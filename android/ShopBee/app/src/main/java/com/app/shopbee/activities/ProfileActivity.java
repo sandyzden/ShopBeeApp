@@ -6,6 +6,10 @@ import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -20,6 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import com.app.shopbee.R;
 import com.app.shopbee.adapter.StoreCardAdapter;
+import com.github.florent37.materialviewpager.MaterialViewPager;
+import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.google.android.gcm.GCMRegistrar;
 import com.app.shopbee.database.DBController;
 
@@ -57,6 +63,8 @@ import com.app.shopbee.http.ServiceHandler;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.app.shopbee.model.Store;
+import com.app.shopbee.fragments.RecyclerViewFragment;
+import com.app.shopbee.fragments.ScrollFragment;
 
 
 public class ProfileActivity extends BaseActivity {
@@ -71,6 +79,8 @@ public class ProfileActivity extends BaseActivity {
     private static final int MODE_EXPLORE = 0;
     private int mMode = MODE_EXPLORE;
 
+    private MaterialViewPager mViewPager;
+
     private ProgressDialog pDialog;
 
     RecyclerView recList;
@@ -78,8 +88,12 @@ public class ProfileActivity extends BaseActivity {
     // contacts JSONArray
     JSONArray stores = null;
 
+    DrawerLayout mDrawerLayout;
+
     // Hashmap for ListView
     ArrayList<Store> storesList;
+
+    Toolbar toolbar;
 
     DBController dbController = new DBController(this);
 
@@ -89,18 +103,114 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Toolbar toolbar = getActionBarToolbar();
-        toolbar.setTitle("Profile Section");
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
+        toolbar = mViewPager.getToolbar();
 
         mButterBar = findViewById(R.id.butter_bar);
 
-        recList = (RecyclerView) findViewById(R.id.cardList);
+        //MaterialPageViewer
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+
+            final ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(false);
+                actionBar.setHomeButtonEnabled(true);
+            }
+
+                toolbar.setNavigationIcon(R.drawable.ic_drawer);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                });
+
+        }
+        //MaterialViewPager
+        mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+
+            @Override
+            public Fragment getItem(int position) {
+                switch (position % 4) {
+                    //case 0:
+                    //    return RecyclerViewFragment.newInstance();
+                    case 1:
+                        return RecyclerViewFragment.newInstance();
+                    //case 2:
+                    //    return WebViewFragment.newInstance();
+                    default:
+                        return ScrollFragment.newInstance();
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 4;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position % 4) {
+                    case 0:
+                        return "BUSINESS";
+                    case 1:
+                        return "INVENTORY";
+                    case 2:
+                        return "TRANSACTIONS";
+                    case 3:
+                        return "REPORT";
+                }
+                return "";
+            }
+        });
+
+        mViewPager.setMaterialViewPagerListener(new MaterialViewPager.MaterialViewPagerListener() {
+            @Override
+            public HeaderDesign getHeaderDesign(int page) {
+                switch (page) {
+                    case 0:
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.blue,
+                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
+                    case 1:
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.green,
+                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
+                    case 2:
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.cyan,
+                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
+                    case 3:
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.red,
+                                "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
+                }
+
+                //execute others actions if needed (ex : modify your header logo)
+
+                return null;
+            }
+        });
+
+        mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
+        mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
+
+        mViewPager.getViewPager().setCurrentItem(0);
+
+     /*   recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        storesList = new ArrayList<Store>();
+        storesList = new ArrayList<Store>();*/
 
     }
 
@@ -140,77 +250,19 @@ public class ProfileActivity extends BaseActivity {
             if(dbController.isTableExists("store"))
             {
                 Toast.makeText(getApplicationContext(), "Loading from local data", Toast.LENGTH_LONG).show();
-                storesList = dbController.getAllStores();
-                recList.setAdapter(new StoreCardAdapter(storesList));
+               // storesList = dbController.getAllStores();
+               // recList.setAdapter(new StoreCardAdapter(storesList));
             }
             else {
                 Toast.makeText(getApplicationContext(), "Loading from remote data", Toast.LENGTH_LONG).show();
-                new GetStore().execute();
+                //new GetStore().execute();
             }
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private class GetStore extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            pDialog = new ProgressDialog(ProfileActivity.this);
-            pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
-            pDialog.show();
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            // Creating service handler class instance
-            ServiceHandler sh = new ServiceHandler();
-
-            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
-
-            if (jsonStr != null) {
-                try {
-                    stores = new JSONArray(jsonStr);
-                    for (int i = 0; i < stores.length(); i++) {
-                        JSONObject c = stores.getJSONObject(i);
-                        String storeName = c.getString("storeName");
-                        String locality = c.getString("locality");
-                        String contactNumber = c.getString("contactNumber");
-
-                        Store store = new Store();
-                        store.setStoreName(storeName);
-                        store.setLocality(locality);
-                        store.setContactNo(contactNumber);
-
-                        dbController.insertStore(store);
-
-                        storesList.add(store);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            recList.setAdapter(new StoreCardAdapter(storesList));
-        }
-    }
 }
 
 

@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="Theme.IOSched" parent="Theme.IOSched.Base" />
 
-    <style name="Theme.IOSched.Base" parent="Theme">
+    <style name="Theme.IOSched.Base" parent="@style/Theme.AppCompat.Light.NoActionBar">
       <!--  <item name="actionBarIconColor">#fff</item>
         <item name="actionBarInsetStart">@dimen/keyline_2</item>
         <item name="homeAsUpIndicator">@drawable/ic_up</item>
@@ -24,6 +24,8 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_up</item>
+
+        <!--<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
 
       <!--  <item name="android:popupMenuStyle">@style/Widget.IOSched.PopupMenu</item>
         <item name="android:listPopupWindowStyle">@style/Widget.IOSched.PopupMenu</item>
@@ -60,5 +62,10 @@
     </style>
 
     <style name="Theme.IOSched.Welcome" parent="Theme.IOSched" />
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
 
 </resources>

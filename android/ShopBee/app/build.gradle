@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.0.0"
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 21
 
     }
@@ -28,5 +28,8 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'com.loopj.android:android-async-http:1.4.4'
     compile 'com.google.code.gson:gson:1.7.2'
+    compile ('com.github.florent37:materialviewpager:1.0.5.2@aar'){
+        transitive = true
+    }
 
 }
